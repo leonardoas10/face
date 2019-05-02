@@ -14,16 +14,18 @@ class Register extends React.Component {
     let key = event.KeyCode || event.which;
     let tecla = String.fromCharCode(key).toLowerCase();
     let letters = "áéíóúabcdefghijklmnñopqrstuvwxyz";
-    this.setState({ name: event.target.value}, () => {
-      console.log("name", this.state.name)
-  });
     if (letters.indexOf(tecla) === -1) {
       alert("ONLY ENTER LETTERS");
       event.preventDefault();
+      event.stopPropagation();
       return false;
-    }
-   
-    console.log("key:", event.key); 
+    } 
+  }
+
+  updateName = (event) => {
+    this.setState({ name: event.target.value}, () => {
+      console.log("name", this.state.name)
+  });
   }
 
   onEmailChange = (event) => {
@@ -77,7 +79,8 @@ class Register extends React.Component {
                   type="text"
                   name="name"
                   id="name"
-                  onKeyPress={this.onNameChange}
+                  onKeyPress={this.onNameChange} 
+                  onChange={this.updateName}
                 />
               </div>
               <div className="mt3">
